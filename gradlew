@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Determine the directory of the script
 APP_HOME=$(dirname "$0")
@@ -15,3 +15,4 @@ GRADLE_JAR="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
 
 # Execute the Java command
 exec "$JAVA_CMD" -jar "$GRADLE_JAR" "$@"
+
