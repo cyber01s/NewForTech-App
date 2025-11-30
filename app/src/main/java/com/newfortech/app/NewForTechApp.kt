@@ -6,7 +6,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class NewForTechApp : Application() {
-    
     companion object {
         lateinit var apiService: ApiService
             private set
@@ -22,7 +21,6 @@ class NewForTechApp : Application() {
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        
         apiService = retrofit.create(ApiService::class.java)
     }
 }

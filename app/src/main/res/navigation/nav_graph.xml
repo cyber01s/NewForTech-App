@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.newfortech.app.ui.home.HomeFragment"
+        android:label="Home">
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment"/>
+    </fragment>
+    
+    <fragment android:id="@+id/securityFragment" android:name="com.newfortech.app.ui.categories.SecurityFragment"/>
+    <fragment android:id="@+id/techNewsFragment" android:name="com.newfortech.app.ui.categories.TechNewsFragment"/>
+    <fragment android:id="@+id/techTalkFragment" android:name="com.newfortech.app.ui.categories.TechTalkFragment"/>
+    <fragment android:id="@+id/opinionsFragment" android:name="com.newfortech.app.ui.categories.OpinionsFragment"/>
+    
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.newfortech.app.ui.detail.DetailFragment"
+        android:label="Article">
+        <argument
+            android:name="post"
+            app:argType="com.newfortech.app.data.model.Post"/>
+    </fragment>
+</navigation>

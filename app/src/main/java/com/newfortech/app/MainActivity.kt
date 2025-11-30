@@ -10,7 +10,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    
     private lateinit var navController: NavController
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.homeFragment, R.id.securityFragment, R.id.techNewsFragment, R.id.techTalkFragment, R.id.opinionsFragment)
         )
-        
         toolbar.setupWithNavController(navController, appBarConfiguration)
     }
     
