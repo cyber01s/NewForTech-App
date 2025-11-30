@@ -15,4 +15,3 @@ GRADLE_JAR="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
 
 # Execute the Java command
 exec "$JAVA_CMD" -jar "$GRADLE_JAR" "$@"
-
