@@ -3,38 +3,47 @@ name: Build NewForTech APK
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
-      - uses: actions/checkout@v4
-      
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Java required for Android/Gradle
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
           java-version: '17'
+          distribution: 'temurin'
           cache: 'gradle'
-          
-      # 1. DOWNLOAD THE VERIFIED GRADLE WRAPPER JAR
-      # This step ensures a clean, uncorrupted binary is present,
-      # bypassing issues caused by corrupted files in the repository history.
-      - name: Download verified Gradle Wrapper JAR
-        run: |
-          mkdir -p gradle/wrapper
-          curl -L 'https://github.com/gradle/gradle/raw/v8.4.0/gradle/wrapper/gradle-wrapper.jar' -o gradle/wrapper/gradle-wrapper.jar
 
-      - name: Grant execute permission for gradlew
+      # IMPORTANT: Ensure the gradlew script is executable
+      - name: Make gradlew executable
         run: chmod +x ./gradlew
         
-      # 2. RUN THE BUILD
+      # === CRITICAL FIX STEP ===
+      # Step to delete the existing, potentially corrupted gradle-wrapper.jar
+      # The build will automatically download the correct version later.
+      - name: Clean existing Gradle Wrapper JAR
+        run: |
+          # Use find to locate and delete the file safely
+          find . -name "gradle-wrapper.jar" -delete
+          
+      # Run the Android build command
       - name: Run Gradle Assemble Debug
         run: ./gradlew assembleDebug --stacktrace
         
-      - uses: actions/upload-artifact@v4
+      # Upload the final APK artifact if the build is successful
+      - name: Upload Debug APK Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: NewForTech-APK
+          name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 7
+          if-no-files-found: error # Fail the action if the APK is not generated
